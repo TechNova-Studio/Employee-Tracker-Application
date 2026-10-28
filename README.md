@@ -1,4 +1,4 @@
-# EMPLOYEE TRACKER — Admin Web and Backend Only
+# EMPLOYEE TRACKER — Admin Web, Backend And Desktop Application 
 
 This package contains the complete `admin-web/` and `backend/` source folders.
 The latest backend productivity URL/domain matching fix is included.
