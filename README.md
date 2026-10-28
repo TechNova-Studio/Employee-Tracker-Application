@@ -24,6 +24,39 @@ npm run dev
 Production build: `npm run build`. Vite embeds environment values during build,
 so rebuild the admin web after changing its backend URL.
 
+## Desktop application setup
+
+The desktop application source is distributed separately from this admin/backend
+archive. Extract the contents of the desktop source ZIP into a `desktop-agent/`
+folder in the project root. Confirm that `desktop-agent/package.json` exists.
+
+From the project root, install the desktop dependencies:
+
+```powershell
+cd desktop-agent
+npm i
+```
+
+`npm i` and `npm install` are the same command. Run either one once.
+Check the desktop agent's `.env` and configure `WORKPULSE_API_BASE` with the
+appropriate WorkPulse staging or live backend API URL, including `/api`.
+
+To run the desktop application in development mode:
+
+```powershell
+npm run start
+```
+
+To build the Windows installer:
+
+```powershell
+npm run build:win
+```
+
+The installer is created in `desktop-agent/dist-electron/`. Test it on one
+Windows PC before distributing it to employees. This README documents the
+separate desktop source; it is not included in this admin/backend archive.
+
 ## Backend
 
 Use your existing backend environment/database configuration. For a fresh
