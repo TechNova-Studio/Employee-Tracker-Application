@@ -1,0 +1,367 @@
+{
+  "info": {
+    "name": "BOLD WorkPulse \u2014 CRM ID Mapping and Employee Onboarding",
+    "description": "Run individual requests using reviewed staging IDs. Mapping APIs use admin login tokens; ingestion uses the connector token. Existing employees need explicit mapping. New employee creation saves a mapping atomically. See ERP_EMPLOYEE_POSTMAN.md. Excel/CSV file import requests use multipart form-data; choose a local file and preview before save. See EMPLOYEE_FILE_IMPORT.md.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000",
+      "type": "string"
+    },
+    {
+      "key": "admin_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "workpulse_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "connector_id",
+      "value": "3",
+      "type": "string"
+    },
+    {
+      "key": "workpulse_employee_id",
+      "value": "85",
+      "type": "string"
+    },
+    {
+      "key": "crm_employee_id",
+      "value": "21",
+      "type": "string"
+    },
+    {
+      "key": "crm_new_employee_id",
+      "value": "900001",
+      "type": "string"
+    },
+    {
+      "key": "employee_email",
+      "value": "new.employee@example.com",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. List existing connectors (admin)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Token {{admin_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/erp-connectors/"
+      }
+    },
+    {
+      "name": "2. Select existing WorkPulse employee (admin)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Token {{admin_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/erp/employee-mappings/form-options/?connector_id={{connector_id}}"
+      }
+    },
+    {
+      "name": "3. Save reviewed existing employee mapping (admin)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Token {{admin_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/erp/employee-mappings/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"connector_id\": \"{{connector_id}}\",\n  \"external_id\": \"{{crm_employee_id}}\",\n  \"workpulse_employee_id\": \"{{workpulse_employee_id}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "4. Review saved mappings (admin)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Token {{admin_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/erp/employee-mappings/?connector_id={{connector_id}}"
+      }
+    },
+    {
+      "name": "5. Bulk validate only (admin)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Token {{admin_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/erp/employee-mappings/bulk/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"connector_id\": \"{{connector_id}}\",\n  \"dry_run\": true,\n  \"rows\": [\n    {\n      \"external_id\": \"{{crm_employee_id}}\",\n      \"workpulse_employee_id\": \"{{workpulse_employee_id}}\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "6. Save reviewed bulk mapping (admin)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Token {{admin_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/erp/employee-mappings/bulk/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"connector_id\": \"{{connector_id}}\",\n  \"dry_run\": false,\n  \"rows\": [\n    {\n      \"external_id\": \"{{crm_employee_id}}\",\n      \"workpulse_employee_id\": \"{{workpulse_employee_id}}\"\n    }\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "7. Inactivate mapped CRM employee (connector)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-WORKPULSE-TOKEN",
+            "value": "{{workpulse_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/erp/ingest/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"event_type\": \"erp_user_inactive\",\n  \"external_id\": \"{{crm_employee_id}}\",\n  \"payload\": {\n    \"is_active\": false\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "8. Activate same mapped employee (connector)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-WORKPULSE-TOKEN",
+            "value": "{{workpulse_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/erp/ingest/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"event_type\": \"erp_user_active\",\n  \"external_id\": \"{{crm_employee_id}}\",\n  \"payload\": {\n    \"is_active\": true\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "9. Update mapped employee name (connector)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-WORKPULSE-TOKEN",
+            "value": "{{workpulse_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/erp/ingest/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"event_type\": \"erp_user_updated\",\n  \"external_id\": \"{{crm_employee_id}}\",\n  \"payload\": {\n    \"first_name\": \"Updated\"\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "10. Onboard a NEW employee and map atomically (connector)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "X-WORKPULSE-TOKEN",
+            "value": "{{workpulse_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/erp/ingest/",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"event_type\": \"erp_user_created\",\n  \"external_id\": \"{{crm_new_employee_id}}\",\n  \"payload\": {\n    \"email\": \"{{employee_email}}\",\n    \"first_name\": \"New\",\n    \"is_active\": true\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "11. Read ERP event results (admin)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Token {{admin_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/erp-events/?connector_id={{connector_id}}"
+      }
+    },
+    {
+      "name": "12. Preview Excel/CSV employee import (connector)",
+      "request": {
+        "method": "POST",
+        "auth": {
+          "type": "noauth"
+        },
+        "header": [
+          {
+            "key": "X-WORKPULSE-TOKEN",
+            "value": "{{workpulse_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/erp/employees/import/",
+        "description": "Select your .xlsx/.csv in the file form field. Do not manually add Content-Type; Postman supplies the multipart boundary. Connector must allow erp_user_created. Company comes from the token. Preview rolls back all writes; save is atomic. Required file columns: employee_id, first_name (or name), email, is_active. Optional: last_name, mobile. Existing unmapped emails require explicit mapping. Maximum 1000 rows / 5 MiB.",
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": "",
+              "description": "Select the employee Excel/CSV from your PC."
+            },
+            {
+              "key": "dry_run",
+              "type": "text",
+              "value": "true"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "13. Save Excel/CSV employees and mappings (connector)",
+      "request": {
+        "method": "POST",
+        "auth": {
+          "type": "noauth"
+        },
+        "header": [
+          {
+            "key": "X-WORKPULSE-TOKEN",
+            "value": "{{workpulse_token}}"
+          }
+        ],
+        "url": "{{base_url}}/api/erp/employees/import/",
+        "description": "Select your .xlsx/.csv in the file form field. Do not manually add Content-Type; Postman supplies the multipart boundary. Connector must allow erp_user_created. Company comes from the token. Preview rolls back all writes; save is atomic. Required file columns: employee_id, first_name (or name), email, is_active. Optional: last_name, mobile. Existing unmapped emails require explicit mapping. Maximum 1000 rows / 5 MiB.",
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": "",
+              "description": "Select the employee Excel/CSV from your PC."
+            },
+            {
+              "key": "dry_run",
+              "type": "text",
+              "value": "false"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

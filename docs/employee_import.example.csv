@@ -1,0 +1,3 @@
+employee_id,first_name,last_name,email,is_active,mobile
+GLUTAPE0001,Rahul,Sharma,rahul@example.com,true,
+GLUTAPE0002,Amit,Patel,amit@example.com,false,

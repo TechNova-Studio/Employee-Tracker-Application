@@ -1,0 +1,522 @@
+{
+  "info": {
+    "name": "BOLD WorkPulse \u2014 Billing and ERP Settings",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Apply migration 0003 before testing. Fill a Super Admin login token, a staging company_id and active plan_id. Run requests individually: manual payment, void, token rotation and disable change state. See BILLING_ERP_FLOW.md for permissions and supported scope."
+  },
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "Token {{admin_token}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api",
+      "type": "string"
+    },
+    {
+      "key": "admin_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "company_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "plan_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "subscription_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "invoice_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "billing_period_start",
+      "value": "2026-09-01",
+      "type": "string"
+    },
+    {
+      "key": "connector_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "connector_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "event_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "crm_employee_id",
+      "value": "21",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Billing (Super Admin writes)",
+      "item": [
+        {
+          "name": "01 Billing options",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/subscriptions/form-options/",
+            "header": [],
+            "description": ""
+          }
+        },
+        {
+          "name": "02 Plan catalogue",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/plans/",
+            "header": [],
+            "description": ""
+          }
+        },
+        {
+          "name": "03 Configure active company subscription (Super Admin)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/subscriptions/configure/",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_id\": \"{{company_id}}\",\n  \"plan_id\": \"{{plan_id}}\",\n  \"billing_cycle\": \"MONTHLY\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  const data = pm.response.json();",
+                  "  pm.collectionVariables.set(\"subscription_id\", data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "04 Read scoped subscription",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/subscriptions/?company_id={{company_id}}",
+            "header": [],
+            "description": ""
+          }
+        },
+        {
+          "name": "05 Create draft",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/billing-invoices/",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscription_id\": \"{{subscription_id}}\",\n  \"billing_period_start\": \"{{billing_period_start}}\",\n  \"notes\": \"Staging billing test\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  const data = pm.response.json();",
+                  "  pm.collectionVariables.set(\"invoice_id\", data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "06 Invoice detail",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/billing-invoices/{{invoice_id}}/",
+            "header": [],
+            "description": ""
+          }
+        },
+        {
+          "name": "07 Issue draft",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/billing-invoices/{{invoice_id}}/issue/",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "08 Record full manual payment (staging only)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/billing-invoices/{{invoice_id}}/record-payment/",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "Super Admin only. Records payment already received elsewhere. Does not collect money.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reference\": \"STAGING-RECEIPT-001\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "09 Scoped billing totals",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/subscriptions/overview/?company_id={{company_id}}",
+            "header": [],
+            "description": ""
+          }
+        },
+        {
+          "name": "10 Void alternative draft/issued record",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/billing-invoices/{{invoice_id}}/void/",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "Use a separate unpaid test invoice. Paid invoices return 409; refunds are not implemented.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Obsolete staging draft\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ERP connector settings",
+      "item": [
+        {
+          "name": "01 Connector options",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/erp-connectors/form-options/?company_id={{company_id}}",
+            "header": [],
+            "description": ""
+          }
+        },
+        {
+          "name": "02 Create connector",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/erp-connectors/",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company\": \"{{company_id}}\",\n  \"name\": \"Postman ERP settings test\",\n  \"is_active\": true,\n  \"allowed_event_types\": [\n    \"erp_user_created\",\n    \"erp_user_updated\",\n    \"erp_user_active\",\n    \"erp_user_inactive\",\n    \"pi_created\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  const data = pm.response.json();",
+                  "  pm.collectionVariables.set(\"connector_id\", data.id);",
+                  "  pm.collectionVariables.set(\"connector_token\", data.api_token);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "03 List masked connectors",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/erp-connectors/?company_id={{company_id}}",
+            "header": [],
+            "description": ""
+          }
+        },
+        {
+          "name": "04 Reveal token (admin only)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/erp-connectors/{{connector_id}}/reveal-token/",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  const data = pm.response.json();",
+                  "  pm.collectionVariables.set(\"connector_token\", data.api_token);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "05 Ingest received-only business event",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/erp/ingest/",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-WORKPULSE-TOKEN",
+                "value": "{{connector_token}}"
+              }
+            ],
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event_type\": \"pi_created\",\n  \"external_id\": \"STAGING-PI-001\",\n  \"payload\": {\n    \"description\": \"Postman settings test\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  const data = pm.response.json();",
+                  "  pm.collectionVariables.set(\"event_id\", data.event.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "06 View event results",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/erp-events/?company_id={{company_id}}&connector_id={{connector_id}}",
+            "header": [],
+            "description": ""
+          }
+        },
+        {
+          "name": "07 Read full event payload",
+          "request": {
+            "method": "GET",
+            "url": "{{base_url}}/erp-events/{{event_id}}/",
+            "header": [],
+            "description": ""
+          }
+        },
+        {
+          "name": "08 Rotate token (invalidates old token)",
+          "request": {
+            "method": "POST",
+            "url": "{{base_url}}/erp-connectors/{{connector_id}}/rotate-token/",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "Use a staging connector. Update the ERP backend after rotation. Old token must return 403.",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  const data = pm.response.json();",
+                  "  pm.collectionVariables.set(\"connector_token\", data.api_token);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "09 Disable connector",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/erp-connectors/{{connector_id}}/",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "Repeat ingestion with this connector token: expected 403.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"is_active\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "10 Enable connector",
+          "request": {
+            "method": "PATCH",
+            "url": "{{base_url}}/erp-connectors/{{connector_id}}/",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"is_active\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

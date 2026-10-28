@@ -1,0 +1,95 @@
+{
+  "name": "bold-workpulse-desktop-agent",
+  "version": "1.0.4",
+  "description": "BOLD WorkPulse Employee Desktop Agent",
+  "main": "electron/main.js",
+  "author": "BOLD WorkPulse",
+  "private": true,
+  "scripts": {
+    "dev": "vite --host 0.0.0.0 --port 5173",
+    "electron": "electron .",
+    "electron:dev": "cross-env NODE_ENV=development electron .",
+    "start": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && npm run electron:dev\"",
+    "test": "node --test",
+    "build:react": "vite build",
+    "build:win": "npm run check:input && npm run check:screenshot && npm run build:react && electron-builder --win --x64 --config.npmRebuild=false",
+    "build:mac": "node scripts/check-input-package.js darwin && npm run build:react && electron-builder --mac --config.npmRebuild=false",
+    "build:linux": "node scripts/check-input-package.js linux && npm run build:react && electron-builder --linux --config.npmRebuild=false",
+    "check:input": "node scripts/check-input-package.js win32 x64",
+    "diagnose:input": "node scripts/diagnose-input.js",
+    "check:screenshot": "node scripts/check-screenshot-package.js"
+  },
+  "dependencies": {
+    "axios": "1.7.7",
+    "form-data": "4.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "screenshot-desktop": "1.15.0",
+    "uiohook-napi": "1.5.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "4.2.1",
+    "concurrently": "8.2.2",
+    "cross-env": "7.0.3",
+    "electron": "28.2.0",
+    "electron-builder": "24.13.3",
+    "vite": "5.2.12",
+    "wait-on": "7.2.0"
+  },
+  "build": {
+    "appId": "in.boldworkpulse.agent",
+    "productName": "BOLD WorkPulse",
+    "copyright": "Copyright \u00a9 BOLD WorkPulse",
+    "directories": {
+      "output": "dist-electron",
+      "buildResources": "build"
+    },
+    "files": [
+      ".env",
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "win": {
+      "signAndEditExecutable": false,
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "BOLD WorkPulse"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.business"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Office"
+    },
+    "asarUnpack": [
+      "node_modules/uiohook-napi/**/*",
+      "node_modules/node-gyp-build/**/*",
+      "node_modules/screenshot-desktop/lib/win32/**/*"
+    ],
+    "afterPack": "scripts/verify-packaged-input.js"
+  },
+  "optionalDependencies": {
+    "active-win": "8.2.1"
+  }
+}

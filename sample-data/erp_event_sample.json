@@ -1,0 +1,10 @@
+{
+  "event_type": "pi_created",
+  "external_id": "PI-STAGING-0001",
+  "payload": {
+    "customer": "Demo Customer",
+    "created_by": "employee@glutape.local",
+    "amount": 125000,
+    "module": "sales"
+  }
+}

@@ -1,0 +1,249 @@
+{
+  "checked_on": "2026-10-16",
+  "backend": {
+    "tests": 28,
+    "passed": 28,
+    "failed": 0,
+    "database": "Isolated SQLite; no live database connection",
+    "dashboard_tests": 17,
+    "existing_rule_api_tests": 11
+  },
+  "frontend": {
+    "method": "Node assertions, React static rendering and real component callback wiring; no browser/viewport rendering.",
+    "passed": 27,
+    "failed": 0,
+    "results": [
+      {
+        "label": "duration formats hours, short intervals and invalid input",
+        "passed": true
+      },
+      {
+        "label": "unknown share is distinct from zero productive share",
+        "passed": true
+      },
+      {
+        "label": "composition preserves unknown and totals 100 percent",
+        "passed": true
+      },
+      {
+        "label": "date presets cross month and year boundaries",
+        "passed": true
+      },
+      {
+        "label": "date validation rejects impossible and reversed dates",
+        "passed": true
+      },
+      {
+        "label": "queries encode filters and exclude UI-only preset",
+        "passed": true
+      },
+      {
+        "label": "page navigation includes endpoints and gaps",
+        "passed": true
+      },
+      {
+        "label": "actual API response renders 20 table rows from 27 employees",
+        "passed": true
+      },
+      {
+        "label": "dashboard exposes every time category and comparison",
+        "passed": true
+      },
+      {
+        "label": "rendered metrics do not contain NaN or undefined",
+        "passed": true
+      },
+      {
+        "label": "department filter passes a scoped department ID",
+        "passed": true
+      },
+      {
+        "label": "period control calls the preset action",
+        "passed": true
+      },
+      {
+        "label": "employee name opens the matching employee detail",
+        "passed": true
+      },
+      {
+        "label": "productive comparison opens the selected employee",
+        "passed": true
+      },
+      {
+        "label": "pagination goes beyond the first page",
+        "passed": true
+      },
+      {
+        "label": "CSV export button invokes the export action",
+        "passed": true
+      },
+      {
+        "label": "sort supports lower productive share",
+        "passed": true
+      },
+      {
+        "label": "no activity is a filter, not a low score",
+        "passed": true
+      },
+      {
+        "label": "empty activity shows honest empty and pending states",
+        "passed": true
+      },
+      {
+        "label": "loading state is announced",
+        "passed": true
+      },
+      {
+        "label": "error state offers retry without fabricated data",
+        "passed": true
+      },
+      {
+        "label": "super admin must select a company",
+        "passed": true
+      },
+      {
+        "label": "theme controls announce active mode and switch",
+        "passed": true
+      },
+      {
+        "label": "navigation access still follows the original roles",
+        "passed": true
+      },
+      {
+        "label": "app shell renders company identity and accessible mobile navigation",
+        "passed": true
+      },
+      {
+        "label": "employee names are escaped in rendered HTML",
+        "passed": true
+      },
+      {
+        "label": "React static rendering emits no warnings",
+        "passed": true
+      }
+    ]
+  },
+  "production_build": {
+    "passed": true,
+    "modules": 65
+  },
+  "palette_contrast": {
+    "standard": "WCAG text contrast calculation, minimum 4.5:1 for the listed token pairs; does not substitute for a full browser accessibility audit",
+    "checks": [
+      {
+        "theme": "light",
+        "foreground": "ink",
+        "background": "surface",
+        "ratio": 15.05,
+        "passed": true
+      },
+      {
+        "theme": "light",
+        "foreground": "muted",
+        "background": "surface",
+        "ratio": 4.8,
+        "passed": true
+      },
+      {
+        "theme": "light",
+        "foreground": "productive-ink",
+        "background": "productive-soft",
+        "ratio": 5.16,
+        "passed": true
+      },
+      {
+        "theme": "light",
+        "foreground": "neutral-ink",
+        "background": "neutral-soft",
+        "ratio": 4.56,
+        "passed": true
+      },
+      {
+        "theme": "light",
+        "foreground": "unproductive-ink",
+        "background": "unproductive-soft",
+        "ratio": 4.81,
+        "passed": true
+      },
+      {
+        "theme": "light",
+        "foreground": "unknown-ink",
+        "background": "unknown-soft",
+        "ratio": 4.7,
+        "passed": true
+      },
+      {
+        "theme": "light",
+        "foreground": "brand-ink",
+        "background": "brand-soft",
+        "ratio": 5.22,
+        "passed": true
+      },
+      {
+        "theme": "dark",
+        "foreground": "ink",
+        "background": "surface",
+        "ratio": 14.87,
+        "passed": true
+      },
+      {
+        "theme": "dark",
+        "foreground": "muted",
+        "background": "surface",
+        "ratio": 7.06,
+        "passed": true
+      },
+      {
+        "theme": "dark",
+        "foreground": "productive-ink",
+        "background": "productive-soft",
+        "ratio": 7.48,
+        "passed": true
+      },
+      {
+        "theme": "dark",
+        "foreground": "neutral-ink",
+        "background": "neutral-soft",
+        "ratio": 7.64,
+        "passed": true
+      },
+      {
+        "theme": "dark",
+        "foreground": "unproductive-ink",
+        "background": "unproductive-soft",
+        "ratio": 7.15,
+        "passed": true
+      },
+      {
+        "theme": "dark",
+        "foreground": "unknown-ink",
+        "background": "unknown-soft",
+        "ratio": 5.93,
+        "passed": true
+      },
+      {
+        "theme": "dark",
+        "foreground": "brand-ink",
+        "background": "brand-soft",
+        "ratio": 6.76,
+        "passed": true
+      }
+    ]
+  },
+  "browser_visual_review": {
+    "completed": false,
+    "reason": "Browser preview/control capability unavailable; no preview server or browser was started."
+  },
+  "viewport_layout_verified": false,
+  "live_database_changed": false,
+  "deployed": false,
+  "new_migration_required": false,
+  "source": "Uploaded admin-web.zip; existing WorkPulse backend in the shared workspace",
+  "important_semantics": [
+    "UNKNOWN excluded from productive share, not treated as unproductive",
+    "No classified activity excluded from comparison lists",
+    "Work time comes from heartbeat telemetry; application usage is separate",
+    "Current department and employment status used for historical periods",
+    "Browser URL/domain capture remains limited by the existing desktop agent"
+  ]
+}

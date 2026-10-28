@@ -1,0 +1,517 @@
+{
+  "info": {
+    "name": "BOLD WorkPulse \u2014 Screenshot, AI and Trial QA",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Use staging data. Fill token, company_id, summary_date, trial_admin_email and trial_admin_password. Run requests individually. Screenshot deletion is destructive to visibility. Convert and cancel are alternative terminal trial actions."
+  },
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "Authorization",
+        "type": "string"
+      },
+      {
+        "key": "value",
+        "value": "Token {{token}}",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "company_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "summary_date",
+      "value": "2026-09-26",
+      "type": "string"
+    },
+    {
+      "key": "screenshot_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "summary_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "summary_updated_at",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "trial_code",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "trial_code_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "trial_company_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "code_expiry",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "trial_admin_email",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "trial_admin_password",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Screenshots",
+      "item": [
+        {
+          "name": "Screenshot filter options",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/screenshots/filter-options/?company_id={{company_id}}",
+            "description": ""
+          }
+        },
+        {
+          "name": "List screenshots (sets screenshot_id)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/screenshots/?company_id={{company_id}}&page=1",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  const data = pm.response.json();",
+                  "  if (data.results.length) pm.collectionVariables.set(\"screenshot_id\", data.results[0].id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "View protected image",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/screenshots/{{screenshot_id}}/view/",
+            "description": ""
+          }
+        },
+        {
+          "name": "Download protected image",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/screenshots/{{screenshot_id}}/download/",
+            "description": ""
+          }
+        },
+        {
+          "name": "Soft delete selected screenshot (test evidence only)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/screenshots/{{screenshot_id}}/soft-delete/",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI summaries and reviews",
+      "item": [
+        {
+          "name": "Summary filter options",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/ai-summaries/filter-options/?company_id={{company_id}}",
+            "description": ""
+          }
+        },
+        {
+          "name": "Generate summaries for selected company/date",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/ai-summaries/generate/",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_id\": \"{{company_id}}\",\n  \"date\": \"{{summary_date}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "List summaries (sets summary_id and revision)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/ai-summaries/?company_id={{company_id}}&from_date={{summary_date}}&to_date={{summary_date}}",
+            "description": ""
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  const data = pm.response.json();",
+                  "  if (data.results.length) { pm.collectionVariables.set(\"summary_id\", data.results[0].id); pm.collectionVariables.set(\"summary_updated_at\", data.results[0].updated_at); }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Submit first review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/manager-reviews/",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ai_summary\": \"{{summary_id}}\",\n  \"summary_updated_at\": \"{{summary_updated_at}}\",\n  \"status\": \"REVIEWED\",\n  \"remarks\": \"Reviewed in staging. Confirm recorded time with employee where needed.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Read review history",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/manager-reviews/?ai_summary={{summary_id}}",
+            "description": ""
+          }
+        }
+      ]
+    },
+    {
+      "name": "Demo code and public signup",
+      "item": [
+        {
+          "name": "Code form options",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/demo-trial-codes/form-options/",
+            "description": ""
+          }
+        },
+        {
+          "name": "Generate a single-use demo code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/demo-trial-codes/",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_company_name\": \"Staging Customer\",\n  \"contact_person_name\": \"Staging Tester\",\n  \"trial_duration_days\": 7,\n  \"allowed_users\": 5,\n  \"allowed_devices\": 5,\n  \"expiry_date\": \"{{code_expiry}}\",\n  \"single_use\": true,\n  \"lead_source\": \"Staging test\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.collectionVariables.set(\"code_expiry\", new Date(Date.now() + 7*86400000).toISOString());"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  const data = pm.response.json();",
+                  "  pm.collectionVariables.set(\"trial_code\", data.code);",
+                  "  pm.collectionVariables.set(\"trial_code_id\", data.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "List active demo codes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/demo-trial-codes/?status=ACTIVE&page=1",
+            "description": ""
+          }
+        },
+        {
+          "name": "Public validate code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/trial/validate-code/",
+            "description": "",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{trial_code}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Public signup (sets trial_company_id)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/trial/signup/",
+            "description": "",
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"{{trial_code}}\",\n  \"company_name\": \"Staging Trial Customer\",\n  \"admin_name\": \"Staging Admin\",\n  \"admin_email\": \"{{trial_admin_email}}\",\n  \"password\": \"{{trial_admin_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code >= 200 && pm.response.code < 300) {",
+                  "  const data = pm.response.json();",
+                  "  pm.collectionVariables.set(\"trial_company_id\", data.company.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Cancel available code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/demo-trial-codes/{{trial_code_id}}/cancel/",
+            "description": "Use an ACTIVE or EXPIRED code. A used single-use code returns 409; cancel its trial via Trial Dashboard instead.",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Trial dashboard and actions",
+      "item": [
+        {
+          "name": "Scoped metrics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/trial/dashboard/",
+            "description": ""
+          }
+        },
+        {
+          "name": "Scoped trial companies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{base_url}}/trial/companies/?page=1",
+            "description": ""
+          }
+        },
+        {
+          "name": "Extend trial by 5 days",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/trial/extend/",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_id\": \"{{trial_company_id}}\",\n  \"days\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Convert trial to paid",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/trial/convert/",
+            "description": "",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_id\": \"{{trial_company_id}}\",\n  \"plan_code\": \"BASIC\",\n  \"billing_cycle\": \"MONTHLY\",\n  \"notes\": \"Staging conversion; payment not collected.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Cancel trial (use a separate unconverted trial)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{base_url}}/trial/cancel/",
+            "description": "Choose either convert or cancel for a trial. This request returns 400 after that company was already converted or cancelled.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_id\": \"{{trial_company_id}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

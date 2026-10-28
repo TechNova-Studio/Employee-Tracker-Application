@@ -1,0 +1,142 @@
+{
+  "desktop_version": "1.0.5",
+  "backend_tests": 62,
+  "desktop_tests": 74,
+  "react_build_passed": true,
+  "windows_directory_packaging_passed": true,
+  "windows_runtime_tested": false,
+  "verification_basis": "Automated tests use simulated foreground window and UI Automation responses. Actual address-bar capture must be checked on one Windows employee PC.",
+  "approved_rules_count": 20,
+  "pending_exact_app_telemetry_rules": 12,
+  "historical_reclassification": false,
+  "baseline_policy_samples_passed": 150,
+  "baseline_policy_samples_failed": 0,
+  "captured_context_examples": [
+    {
+      "department": 4,
+      "activity": "Sales WhatsApp Business",
+      "domain": "web.whatsapp.com",
+      "url": "https://web.whatsapp.com/",
+      "expected": "PRODUCTIVE",
+      "actual": "PRODUCTIVE",
+      "passed": true
+    },
+    {
+      "department": 2,
+      "activity": "Purchase WhatsApp",
+      "domain": "web.whatsapp.com",
+      "url": "https://web.whatsapp.com/",
+      "expected": "PRODUCTIVE",
+      "actual": "PRODUCTIVE",
+      "passed": true
+    },
+    {
+      "department": 1,
+      "activity": "Customer Service WhatsApp",
+      "domain": "web.whatsapp.com",
+      "url": "https://web.whatsapp.com/",
+      "expected": "PRODUCTIVE",
+      "actual": "PRODUCTIVE",
+      "passed": true
+    },
+    {
+      "department": 9,
+      "activity": "Dispatch WhatsApp",
+      "domain": "web.whatsapp.com",
+      "url": "https://web.whatsapp.com/",
+      "expected": "PRODUCTIVE",
+      "actual": "PRODUCTIVE",
+      "passed": true
+    },
+    {
+      "department": 3,
+      "activity": "Accounts WhatsApp",
+      "domain": "web.whatsapp.com",
+      "url": "https://web.whatsapp.com/",
+      "expected": "NEUTRAL",
+      "actual": "NEUTRAL",
+      "passed": true
+    },
+    {
+      "department": 5,
+      "activity": "HR LinkedIn",
+      "domain": "www.linkedin.com",
+      "url": "https://www.linkedin.com/feed/",
+      "expected": "PRODUCTIVE",
+      "actual": "PRODUCTIVE",
+      "passed": true
+    },
+    {
+      "department": 3,
+      "activity": "Accounts LinkedIn",
+      "domain": "www.linkedin.com",
+      "url": "https://www.linkedin.com/feed/",
+      "expected": "NEUTRAL",
+      "actual": "NEUTRAL",
+      "passed": true
+    },
+    {
+      "department": 6,
+      "activity": "IT ChatGPT",
+      "domain": "chatgpt.com",
+      "url": "https://chatgpt.com/",
+      "expected": "PRODUCTIVE",
+      "actual": "PRODUCTIVE",
+      "passed": true
+    },
+    {
+      "department": 4,
+      "activity": "Sales ChatGPT",
+      "domain": "chatgpt.com",
+      "url": "https://chatgpt.com/",
+      "expected": "NEUTRAL",
+      "actual": "NEUTRAL",
+      "passed": true
+    },
+    {
+      "department": 4,
+      "activity": "Glutape live CRM",
+      "domain": "boldsoftmations.github.io",
+      "url": "https://boldsoftmations.github.io/crm-frontend/",
+      "expected": "PRODUCTIVE",
+      "actual": "PRODUCTIVE",
+      "passed": true
+    },
+    {
+      "department": 3,
+      "activity": "Gmail without supplied domain",
+      "domain": "mail.google.com",
+      "url": "https://mail.google.com/mail/u/0/",
+      "expected": "PRODUCTIVE",
+      "actual": "PRODUCTIVE",
+      "passed": true
+    },
+    {
+      "department": 4,
+      "activity": "Unclassified website",
+      "domain": "unclassified.example",
+      "url": "https://unclassified.example/",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "passed": true
+    },
+    {
+      "department": 4,
+      "activity": "Other GitHub Pages project",
+      "domain": "boldsoftmations.github.io",
+      "url": "https://boldsoftmations.github.io/other-project/",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "passed": true
+    },
+    {
+      "department": 4,
+      "activity": "Old title-only agent, no actual URL",
+      "domain": "",
+      "url": "",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "passed": true
+    }
+  ]
+}

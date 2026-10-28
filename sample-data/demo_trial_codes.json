@@ -1,0 +1,20 @@
+[
+  {
+    "code": "GLU-TRIAL-5DAY",
+    "trial_duration_days": 5,
+    "allowed_users": 5,
+    "allowed_devices": 5
+  },
+  {
+    "code": "GLU-TRIAL-7DAY",
+    "trial_duration_days": 7,
+    "allowed_users": 10,
+    "allowed_devices": 10
+  },
+  {
+    "code": "GLU-TRIAL-10DAY",
+    "trial_duration_days": 10,
+    "allowed_users": 10,
+    "allowed_devices": 10
+  }
+]

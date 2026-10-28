@@ -1,0 +1,563 @@
+{
+  "baseline_id": "GLUTAPE_V1_FINAL_2026_10_16",
+  "company_id": 1,
+  "company_name_contains": "glutape",
+  "approved_on": "2026-10-16",
+  "source_reference": "Final revised Glutape V1 approval email provided in the conversation, 16 October 2026, 1:39 PM.",
+  "policy_fingerprint_basis": "Canonical rules, pending telemetry rules and superseded rules in this file; not a hash of the original email.",
+  "expected_departments": {
+    "1": "Customer Service",
+    "2": "Purchase",
+    "3": "Accounts",
+    "4": "Sales",
+    "5": "Hr",
+    "6": "IT",
+    "7": "Factory",
+    "8": "Store",
+    "9": "Dispatch"
+  },
+  "supersedes": {
+    "baseline_id": "GLUTAPE_V1_2026_10_16",
+    "source_sha256": "d629d477f707c58d64769f2f450a04ae6fb256fbd0b54f7b6a51de730c570385"
+  },
+  "rules": [
+    {
+      "company": 1,
+      "department": null,
+      "pattern_type": "URL",
+      "pattern": "boldsoftmations.github.io/crm-frontend/",
+      "category": "PRODUCTIVE",
+      "notes": "Glutape live CRM/ERP",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": null,
+      "pattern_type": "DOMAIN",
+      "pattern": "mail.google.com",
+      "category": "PRODUCTIVE",
+      "notes": "Company email",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": null,
+      "pattern_type": "DOMAIN",
+      "pattern": "drive.google.com",
+      "category": "PRODUCTIVE",
+      "notes": "Company documents/files/backups",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": null,
+      "pattern_type": "DOMAIN",
+      "pattern": "docs.google.com",
+      "category": "PRODUCTIVE",
+      "notes": "Google Sheets/Docs used for operational work",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": null,
+      "pattern_type": "DOMAIN",
+      "pattern": "web.whatsapp.com",
+      "category": "NEUTRAL",
+      "notes": "Can be business or personal; override by department",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": null,
+      "pattern_type": "DOMAIN",
+      "pattern": "google.com",
+      "category": "NEUTRAL",
+      "notes": "Search may be work-related or unrelated",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": null,
+      "pattern_type": "DOMAIN",
+      "pattern": "youtube.com",
+      "category": "NEUTRAL",
+      "notes": "Can be training/research or entertainment",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": null,
+      "pattern_type": "DOMAIN",
+      "pattern": "linkedin.com",
+      "category": "NEUTRAL",
+      "notes": "Productive for specific departments only",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": null,
+      "pattern_type": "DOMAIN",
+      "pattern": "chatgpt.com",
+      "category": "NEUTRAL",
+      "notes": "Can be a work tool, but should not automatically count as productive for every employee",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 1,
+      "pattern_type": "DOMAIN",
+      "pattern": "web.whatsapp.com",
+      "category": "PRODUCTIVE",
+      "notes": "Customer communication, order/status coordination and follow-ups",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 2,
+      "pattern_type": "DOMAIN",
+      "pattern": "web.whatsapp.com",
+      "category": "PRODUCTIVE",
+      "notes": "Supplier, forwarder, CHA and purchase communication",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 4,
+      "pattern_type": "DOMAIN",
+      "pattern": "web.whatsapp.com",
+      "category": "PRODUCTIVE",
+      "notes": "Customer enquiries, quotations, follow-ups and order communication",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 5,
+      "pattern_type": "DOMAIN",
+      "pattern": "web.whatsapp.com",
+      "category": "PRODUCTIVE",
+      "notes": "Candidate/employee communication",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 5,
+      "pattern_type": "DOMAIN",
+      "pattern": "linkedin.com",
+      "category": "PRODUCTIVE",
+      "notes": "Recruitment",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 5,
+      "pattern_type": "DOMAIN",
+      "pattern": "naukri.com",
+      "category": "PRODUCTIVE",
+      "notes": "Recruitment",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 5,
+      "pattern_type": "DOMAIN",
+      "pattern": "indeed.com",
+      "category": "PRODUCTIVE",
+      "notes": "Recruitment",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 5,
+      "pattern_type": "DOMAIN",
+      "pattern": "ncs.gov.in",
+      "category": "PRODUCTIVE",
+      "notes": "Recruitment/job-posting activity",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 6,
+      "pattern_type": "DOMAIN",
+      "pattern": "github.com",
+      "category": "PRODUCTIVE",
+      "notes": "Source-code/repository work",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 6,
+      "pattern_type": "DOMAIN",
+      "pattern": "chatgpt.com",
+      "category": "PRODUCTIVE",
+      "notes": "Development/research/troubleshooting use",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 9,
+      "pattern_type": "DOMAIN",
+      "pattern": "web.whatsapp.com",
+      "category": "PRODUCTIVE",
+      "notes": "Transporter/customer/dispatch coordination",
+      "is_active": true
+    }
+  ],
+  "pending_telemetry_rules": [
+    {
+      "department": null,
+      "department_name": "Company-wide",
+      "tool_name": "Microsoft Excel",
+      "pattern_types": [
+        "APP"
+      ],
+      "category": "PRODUCTIVE",
+      "notes": "Extensively used across Glutape for operations/MIS",
+      "status": "REQUIRES_TELEMETRY_CONFIRMATION"
+    },
+    {
+      "department": null,
+      "department_name": "Company-wide",
+      "tool_name": "Microsoft Word",
+      "pattern_types": [
+        "APP"
+      ],
+      "category": "NEUTRAL",
+      "notes": "Legitimate business tool but not necessarily productive for every role",
+      "status": "REQUIRES_TELEMETRY_CONFIRMATION"
+    },
+    {
+      "department": null,
+      "department_name": "Company-wide",
+      "tool_name": "Microsoft PowerPoint",
+      "pattern_types": [
+        "APP"
+      ],
+      "category": "NEUTRAL",
+      "notes": "Presentations/training/meetings",
+      "status": "REQUIRES_TELEMETRY_CONFIRMATION"
+    },
+    {
+      "department": 3,
+      "department_name": "Accounts",
+      "tool_name": "Tally",
+      "pattern_types": [
+        "APP"
+      ],
+      "category": "PRODUCTIVE",
+      "notes": "Accounting/bookkeeping work",
+      "status": "REQUIRES_TELEMETRY_CONFIRMATION"
+    },
+    {
+      "department": 5,
+      "department_name": "Hr",
+      "tool_name": "SmartOffice",
+      "pattern_types": [
+        "APP",
+        "DOMAIN"
+      ],
+      "category": "PRODUCTIVE",
+      "notes": "Attendance/HR activity",
+      "status": "REQUIRES_TELEMETRY_CONFIRMATION"
+    },
+    {
+      "department": 6,
+      "department_name": "IT",
+      "tool_name": "VS Code",
+      "pattern_types": [
+        "APP"
+      ],
+      "category": "PRODUCTIVE",
+      "notes": "Development",
+      "status": "REQUIRES_TELEMETRY_CONFIRMATION"
+    },
+    {
+      "department": 6,
+      "department_name": "IT",
+      "tool_name": "Postman",
+      "pattern_types": [
+        "APP"
+      ],
+      "category": "PRODUCTIVE",
+      "notes": "API testing",
+      "status": "REQUIRES_TELEMETRY_CONFIRMATION"
+    },
+    {
+      "department": 6,
+      "department_name": "IT",
+      "tool_name": "pgAdmin",
+      "pattern_types": [
+        "APP"
+      ],
+      "category": "PRODUCTIVE",
+      "notes": "Database work",
+      "status": "REQUIRES_TELEMETRY_CONFIRMATION"
+    },
+    {
+      "department": 6,
+      "department_name": "IT",
+      "tool_name": "PowerShell",
+      "pattern_types": [
+        "APP"
+      ],
+      "category": "PRODUCTIVE",
+      "notes": "Development/server/admin work",
+      "status": "REQUIRES_TELEMETRY_CONFIRMATION"
+    },
+    {
+      "department": 6,
+      "department_name": "IT",
+      "tool_name": "CMD",
+      "pattern_types": [
+        "APP"
+      ],
+      "category": "PRODUCTIVE",
+      "notes": "Development/server/admin work",
+      "status": "REQUIRES_TELEMETRY_CONFIRMATION"
+    },
+    {
+      "department": 7,
+      "department_name": "Factory",
+      "tool_name": "OS-BOOKS",
+      "pattern_types": [
+        "APP"
+      ],
+      "category": "PRODUCTIVE",
+      "notes": "Factory operational/inventory activity while OS-BOOKS remains in use",
+      "status": "REQUIRES_TELEMETRY_CONFIRMATION"
+    },
+    {
+      "department": 8,
+      "department_name": "Store",
+      "tool_name": "OS-BOOKS",
+      "pattern_types": [
+        "APP"
+      ],
+      "category": "PRODUCTIVE",
+      "notes": "Stores/inventory activity while OS-BOOKS remains in use",
+      "status": "REQUIRES_TELEMETRY_CONFIRMATION"
+    }
+  ],
+  "superseded_rules": [
+    {
+      "company": 1,
+      "department": null,
+      "pattern_type": "DOMAIN",
+      "pattern": "calendar.google.com",
+      "category": "PRODUCTIVE",
+      "notes": "Business calendar and scheduling.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": null,
+      "pattern_type": "DOMAIN",
+      "pattern": "meet.google.com",
+      "category": "PRODUCTIVE",
+      "notes": "Business meetings/calls.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": null,
+      "pattern_type": "DOMAIN",
+      "pattern": "netflix.com",
+      "category": "UNPRODUCTIVE",
+      "notes": "Entertainment.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": null,
+      "pattern_type": "DOMAIN",
+      "pattern": "jiohotstar.com",
+      "category": "UNPRODUCTIVE",
+      "notes": "Entertainment.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": null,
+      "pattern_type": "DOMAIN",
+      "pattern": "primevideo.com",
+      "category": "UNPRODUCTIVE",
+      "notes": "Entertainment.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": null,
+      "pattern_type": "DOMAIN",
+      "pattern": "steampowered.com",
+      "category": "UNPRODUCTIVE",
+      "notes": "Gaming/non-business use.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 2,
+      "pattern_type": "DOMAIN",
+      "pattern": "alibaba.com",
+      "category": "PRODUCTIVE",
+      "notes": "Supplier/product sourcing.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 2,
+      "pattern_type": "DOMAIN",
+      "pattern": "made-in-china.com",
+      "category": "PRODUCTIVE",
+      "notes": "Overseas supplier/product sourcing.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 2,
+      "pattern_type": "DOMAIN",
+      "pattern": "globalsources.com",
+      "category": "PRODUCTIVE",
+      "notes": "Overseas sourcing/vendor research.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 2,
+      "pattern_type": "DOMAIN",
+      "pattern": "icegate.gov.in",
+      "category": "PRODUCTIVE",
+      "notes": "Import/customs-related work when used by Purchase.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 3,
+      "pattern_type": "DOMAIN",
+      "pattern": "gst.gov.in",
+      "category": "PRODUCTIVE",
+      "notes": "GST compliance.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 3,
+      "pattern_type": "DOMAIN",
+      "pattern": "ewaybillgst.gov.in",
+      "category": "PRODUCTIVE",
+      "notes": "E-way bill/statutory activity.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 3,
+      "pattern_type": "DOMAIN",
+      "pattern": "incometax.gov.in",
+      "category": "PRODUCTIVE",
+      "notes": "Income-tax/TDS/compliance work.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 3,
+      "pattern_type": "DOMAIN",
+      "pattern": "icegate.gov.in",
+      "category": "PRODUCTIVE",
+      "notes": "Import/customs/payment/documentation activity where Accounts is involved.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 4,
+      "pattern_type": "DOMAIN",
+      "pattern": "linkedin.com",
+      "category": "PRODUCTIVE",
+      "notes": "Prospect/company/contact research and lead generation.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 4,
+      "pattern_type": "DOMAIN",
+      "pattern": "indiamart.com",
+      "category": "PRODUCTIVE",
+      "notes": "Lead/enquiry/customer research.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 4,
+      "pattern_type": "DOMAIN",
+      "pattern": "tradeindia.com",
+      "category": "PRODUCTIVE",
+      "notes": "Lead/company/product research.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 4,
+      "pattern_type": "DOMAIN",
+      "pattern": "justdial.com",
+      "category": "PRODUCTIVE",
+      "notes": "Business/prospect research when used for lead generation.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 6,
+      "pattern_type": "DOMAIN",
+      "pattern": "stackoverflow.com",
+      "category": "PRODUCTIVE",
+      "notes": "Technical troubleshooting/reference.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 6,
+      "pattern_type": "DOMAIN",
+      "pattern": "platform.openai.com",
+      "category": "PRODUCTIVE",
+      "notes": "API/development work.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 6,
+      "pattern_type": "DOMAIN",
+      "pattern": "developer.mozilla.org",
+      "category": "PRODUCTIVE",
+      "notes": "Development documentation.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 6,
+      "pattern_type": "DOMAIN",
+      "pattern": "docs.python.org",
+      "category": "PRODUCTIVE",
+      "notes": "Python/backend documentation.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 6,
+      "pattern_type": "DOMAIN",
+      "pattern": "heroku.com",
+      "category": "PRODUCTIVE",
+      "notes": "Application/deployment/database administration where used.",
+      "is_active": true
+    },
+    {
+      "company": 1,
+      "department": 6,
+      "pattern_type": "DOMAIN",
+      "pattern": "console.aws.amazon.com",
+      "category": "PRODUCTIVE",
+      "notes": "Cloud/storage/infrastructure administration.",
+      "is_active": true
+    }
+  ],
+  "review_window_working_days": [
+    5,
+    7
+  ],
+  "policy_sha256": "29220b8c2ac08bea3351ab3962cb1b41ab4098b713d277895e2072f54be912c1"
+}
